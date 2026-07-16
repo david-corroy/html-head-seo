@@ -236,7 +236,59 @@ Cuatro archivos bastan en 2026:
 </head>
 ```
 
-## 9. La checklist de salida a producción
+## 9. El inventario completo — el resto de etiquetas, y lo que valen de verdad
+
+Todo lo demás que puede vivir en un `<head>`, más allá de lo esencial de las secciones 1 a 6 — clasificado en tres veredictos: ✅ útil en casos concretos, 🟠 nicho, ❌ muerta (elimínala en cuanto la veas).
+
+### Identidad y descubrimiento
+
+| Etiqueta | Función | Veredicto |
+|---|---|---|
+| `<link rel="me" href="…">` | Prueba cruzada de propiedad de tus perfiles (Mastodon la verifica) — una señal de **entidad** gratuita | ✅ apúntala a tus perfiles clave |
+| `<meta name="fediverse:creator" content="@tu@instancia">` | Acredita al autor en las comparticiones de Mastodon/Fediverso | ✅ si estás activo allí |
+| `<link rel="alternate" type="application/rss+xml" href="/feed/">` | Declara tu feed RSS/Atom — aún lo leen los agregadores Y algunos crawlers de IA | ✅ si publicas con regularidad |
+| `<meta name="google-site-verification">` / `msvalidate.01` | Verificación de GSC / Bing Webmaster — mejor por DNS para no engordar el head | 🟠 funciona, pero DNS es más limpio |
+| `<link rel="pingback">` / `rel="webmention"` | Notificaciones entre blogs | 🟠 nicho (IndieWeb) |
+| `<link rel="search" type="application/opensearchdescription+xml">` | OpenSearch | ❌ abandonado por los navegadores |
+| `<meta name="generator" content="WordPress 6.x">` | Anuncia tu CMS y su versión | ❌ elimínala: información gratis para atacantes |
+| `rel="author"` / `rel="publisher"` | Antiguos enlaces de Google+ | ❌ murieron con Google+ |
+| `<meta name="geo.position">` / `ICBM` | Geolocalización en meta | ❌ ignoradas por todos los buscadores — lo local se juega en tu ficha de Google y el JSON-LD |
+
+### Móvil, PWA y presentación
+
+| Etiqueta | Función | Veredicto |
+|---|---|---|
+| `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="…">` | Color de barra distinto en modo oscuro | ✅ acabado limpio |
+| `<meta name="color-scheme" content="light dark">` | Anuncia que la página soporta ambos modos (evita el destello blanco en oscuro) | ✅ si tu sitio tiene modo oscuro |
+| `<meta name="format-detection" content="telephone=no">` | Impide que iOS convierta cada cadena de cifras en un enlace telefónico | 🟠 útil en páginas con referencias/precios |
+| `apple-mobile-web-app-capable` / `-status-bar-style` / `-title` | Presentación cuando el sitio se ancla a la pantalla de inicio de iOS | 🟠 solo PWA |
+| `<link rel="apple-touch-startup-image">` | Pantalla de arranque PWA en iOS (una variante por tamaño de pantalla…) | 🟠 PWA exigente |
+| `msapplication-TileColor` + `browserconfig.xml` | Mosaicos de Windows 8/10 | ❌ legacy, sin impacto alguno |
+
+### Rendimiento avanzado y seguridad
+
+| Etiqueta | Función | Veredicto |
+|---|---|---|
+| `<script type="speculationrules">` | El sucesor oficial de prefetch/prerender: pre-renderiza las páginas probables (navegación casi instantánea) | ✅ la palanca real de 2026, Chrome/Edge |
+| `<link rel="modulepreload" href="/app.js">` | Precarga un módulo ES con sus dependencias | ✅ sitios con JS modular |
+| `<link rel="prefetch">` / `rel="prerender"` | Las antiguas especulaciones | 🟠 superadas por speculationrules |
+| `integrity="sha384-…" crossorigin` en scripts externos | SRI: un script de terceros manipulado es rechazado | ✅ siempre que un script venga de un CDN |
+| `<meta name="referrer" content="strict-origin-when-cross-origin">` | Política de referente (la cabecera HTTP sigue siendo preferible) | 🟠 aceptable como apaño |
+| `<meta http-equiv="Content-Security-Policy">` | CSP en meta — sin `frame-ancestors` ni informes en versión meta | 🟠 la cabecera HTTP lo hace mejor |
+| `<base href="…">` | Redefine la base de TODAS las URL relativas (enlaces, imágenes, scripts…) | ❌ trampa clásica — roturas silenciosas, evítala |
+| `<meta http-equiv="refresh" content="5;url=…">` | Redirección del lado cliente | ❌ mejor siempre una 301 de servidor |
+
+### Open Graph extendido
+
+| Etiqueta | Función | Veredicto |
+|---|---|---|
+| `article:published_time` / `article:modified_time` / `article:author` | Metadatos de artículo para comparticiones (también los leen algunos parsers) | ✅ en blogs |
+| `og:image:alt` | Texto alternativo de la imagen de compartición (accesibilidad) | ✅ dos segundos de trabajo |
+| `og:video` / `og:audio` | Medio incrustado en la compartición | 🟠 nicho |
+| `fb:app_id` | Enlace a una app de Facebook | ❌ inútil sin app de Facebook |
+| `<meta name="rating" content="adult">` | Autoetiquetado de contenido adulto (SafeSearch) | 🟠 obligatorio… si te aplica |
+
+## 10. La checklist de salida a producción
 
 - [ ] `charset` + `viewport` al principio, zoom libre
 - [ ] `<title>` único, 50-60 caracteres, palabra clave al inicio
@@ -252,10 +304,8 @@ Cuatro archivos bastan en 2026:
 
 ---
 
-## Créditos y licencia
+## Licencia
 
-Redacción 100 % original. La idea de un repositorio dedicado al `<head>` la popularizó [HEAD de Josh Buchea](https://github.com/joshbuchea/HEAD) — ve allí para el inventario exhaustivo de etiquetas; ven aquí para saber cuáles importan y por qué.
-
-Licencia **CC BY 4.0**: reutilización libre a condición de acreditar «Bernard David Corroy — [david-corroy.com](https://www.david-corroy.com/)».
+Redacción 100 % original. Licencia **CC BY 4.0**: reutilización libre a condición de acreditar «Bernard David Corroy — [david-corroy.com](https://www.david-corroy.com/)».
 
 **El autor**: Bernard David Corroy, consultor SEO & GEO independiente — [Web](https://www.david-corroy.com/) · [Auditoría exprés gratuita](https://www.david-corroy.com/audit-express/) (FR) · [Prompts GEO](https://github.com/david-corroy/prompts-geo) · [LinkedIn](https://www.linkedin.com/in/bernard-david-corroy/) · [Wikidata](https://www.wikidata.org/entity/Q140472682)

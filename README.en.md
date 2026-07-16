@@ -236,7 +236,59 @@ Four files are enough in 2026:
 </head>
 ```
 
-## 9. The go-live checklist
+## 9. The complete inventory — every remaining tag, and what it's actually worth
+
+Everything else that can live in a `<head>`, beyond the essentials of sections 1-6 — sorted into three verdicts: ✅ useful in specific cases, 🟠 niche, ❌ dead (remove it on sight).
+
+### Identity & discovery
+
+| Tag | Role | Verdict |
+|---|---|---|
+| `<link rel="me" href="…">` | Cross-ownership proof of your profiles (Mastodon verifies it) — a free **entity** signal | ✅ point it at your key profiles |
+| `<meta name="fediverse:creator" content="@you@instance">` | Credits the author on Mastodon/Fediverse shares | ✅ if you're active there |
+| `<link rel="alternate" type="application/rss+xml" href="/feed/">` | Declares your RSS/Atom feed — still read by aggregators AND some AI crawlers | ✅ if you publish regularly |
+| `<meta name="google-site-verification">` / `msvalidate.01` | GSC / Bing Webmaster verification — prefer the DNS method to keep the head lean | 🟠 works, but DNS is cleaner |
+| `<link rel="pingback">` / `rel="webmention"` | Blog-to-blog notifications | 🟠 niche (IndieWeb) |
+| `<link rel="search" type="application/opensearchdescription+xml">` | OpenSearch | ❌ abandoned by browsers |
+| `<meta name="generator" content="WordPress 6.x">` | Advertises your CMS and its version | ❌ remove: free intel for attackers |
+| `rel="author"` / `rel="publisher"` | Ex-Google+ links | ❌ died with Google+ |
+| `<meta name="geo.position">` / `ICBM` | Meta geolocation | ❌ ignored by every engine — local SEO happens in your Google profile and JSON-LD |
+
+### Mobile, PWA & dressing
+
+| Tag | Role | Verdict |
+|---|---|---|
+| `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="…">` | Different browser-bar color in dark mode | ✅ clean finishing touch |
+| `<meta name="color-scheme" content="light dark">` | Announces the page handles both modes (avoids the white flash in dark mode) | ✅ if your site has a dark mode |
+| `<meta name="format-detection" content="telephone=no">` | Stops iOS from turning every digit string into a phone link | 🟠 useful on pages with references/prices |
+| `apple-mobile-web-app-capable` / `-status-bar-style` / `-title` | Dressing when the site is pinned to the iOS home screen | 🟠 PWA only |
+| `<link rel="apple-touch-startup-image">` | iOS PWA launch screen (one variant per screen size…) | 🟠 demanding PWA |
+| `msapplication-TileColor` + `browserconfig.xml` | Windows 8/10 tiles | ❌ legacy, zero impact left |
+
+### Advanced performance & security
+
+| Tag | Role | Verdict |
+|---|---|---|
+| `<script type="speculationrules">` | The official successor to prefetch/prerender: pre-renders likely next pages (near-instant navigation) | ✅ the real 2026 lever, Chrome/Edge |
+| `<link rel="modulepreload" href="/app.js">` | Preloads an ES module with its dependencies | ✅ modular-JS sites |
+| `<link rel="prefetch">` / `rel="prerender"` | The old speculation hints | 🟠 superseded by speculationrules |
+| `integrity="sha384-…" crossorigin` on external scripts | SRI: a tampered third-party script is rejected | ✅ whenever a script comes from a CDN |
+| `<meta name="referrer" content="strict-origin-when-cross-origin">` | Referrer policy (the HTTP header remains preferable) | 🟠 fine as a fallback |
+| `<meta http-equiv="Content-Security-Policy">` | CSP as a meta — no `frame-ancestors`, no reporting in meta form | 🟠 the HTTP header does it better |
+| `<base href="…">` | Redefines the base of ALL relative URLs (links, images, scripts…) | ❌ classic trap — silent breakage, avoid |
+| `<meta http-equiv="refresh" content="5;url=…">` | Client-side redirect | ❌ always prefer a server-side 301 |
+
+### Extended Open Graph
+
+| Tag | Role | Verdict |
+|---|---|---|
+| `article:published_time` / `article:modified_time` / `article:author` | Article metadata for shares (also read by some parsers) | ✅ on blogs |
+| `og:image:alt` | Alt text for the share image (accessibility) | ✅ two seconds of work |
+| `og:video` / `og:audio` | Embedded media in the share | 🟠 niche |
+| `fb:app_id` | Link to a Facebook app | ❌ pointless without a Facebook app |
+| `<meta name="rating" content="adult">` | Adult-content self-labeling (SafeSearch) | 🟠 mandatory… if applicable |
+
+## 10. The go-live checklist
 
 - [ ] `charset` + `viewport` first, zoom free
 - [ ] unique `<title>`, 50-60 characters, keyword up front
@@ -252,10 +304,8 @@ Four files are enough in 2026:
 
 ---
 
-## Credits & license
+## License
 
-100% original writing. The idea of a repository dedicated to the `<head>` was popularized by [Josh Buchea's HEAD](https://github.com/joshbuchea/HEAD) — go there for the exhaustive tag inventory; come here to know which ones matter and why.
-
-License **CC BY 4.0**: free reuse provided you credit "Bernard David Corroy — [david-corroy.com](https://www.david-corroy.com/)".
+100% original writing. License **CC BY 4.0**: free reuse provided you credit "Bernard David Corroy — [david-corroy.com](https://www.david-corroy.com/)".
 
 **The author**: Bernard David Corroy, independent SEO & GEO consultant — [Website](https://www.david-corroy.com/) · [Free express audit](https://www.david-corroy.com/audit-express/) (FR) · [GEO Prompts](https://github.com/david-corroy/prompts-geo) · [LinkedIn](https://www.linkedin.com/in/bernard-david-corroy/) · [Wikidata](https://www.wikidata.org/entity/Q140472682)

@@ -236,7 +236,59 @@ Quatre fichiers suffisent en 2026 :
 </head>
 ```
 
-## 9. La checklist de mise en prod
+## 9. L'inventaire complet — le reste des balises, et ce qu'elles valent vraiment
+
+Tout ce qui peut exister dans un `<head>`, au-delà de l'essentiel des sections 1 à 6 — classé en trois verdicts : ✅ utile dans des cas précis, 🟠 niche, ❌ morte (à retirer si vous la croisez).
+
+### Identité & découverte
+
+| Balise | Rôle | Verdict |
+|---|---|---|
+| `<link rel="me" href="…">` | Preuve de propriété croisée de vos profils (Mastodon la vérifie) — un signal d'**entité** gratuit | ✅ à poser vers vos profils clés |
+| `<meta name="fediverse:creator" content="@vous@instance">` | Crédite l'auteur lors des partages sur Mastodon/Fediverse | ✅ si vous y êtes actif |
+| `<link rel="alternate" type="application/rss+xml" href="/feed/">` | Déclare votre flux RSS/Atom — encore lu par les agrégateurs ET certains crawlers IA | ✅ si vous publiez régulièrement |
+| `<meta name="google-site-verification">` / `msvalidate.01` | Vérification GSC / Bing Webmaster — préférez la méthode DNS pour ne pas alourdir le head | 🟠 fonctionne, mais DNS plus propre |
+| `<link rel="pingback">` / `rel="webmention"` | Notifications inter-blogs | 🟠 niche (IndieWeb) |
+| `<link rel="search" type="application/opensearchdescription+xml">` | OpenSearch | ❌ abandonné par les navigateurs |
+| `<meta name="generator" content="WordPress 6.x">` | Affiche votre CMS et sa version | ❌ à retirer : information offerte aux attaquants |
+| `rel="author"` / `rel="publisher"` | Ex-liens Google+ | ❌ morts avec Google+ |
+| `<meta name="geo.position">` / `ICBM` | Géolocalisation méta | ❌ ignorées par tous les moteurs — le local se joue dans la fiche Google et le JSON-LD |
+
+### Mobile, PWA & habillage
+
+| Balise | Rôle | Verdict |
+|---|---|---|
+| `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="…">` | Couleur de barre différente en mode sombre | ✅ finition propre |
+| `<meta name="color-scheme" content="light dark">` | Annonce que la page gère les deux modes (évite le flash blanc en dark) | ✅ si votre site a un mode sombre |
+| `<meta name="format-detection" content="telephone=no">` | Empêche iOS de transformer chaque suite de chiffres en lien téléphone | 🟠 utile sur les pages à références/prix |
+| `apple-mobile-web-app-capable` / `-status-bar-style` / `-title` | Habillage quand le site est épinglé sur l'écran d'accueil iOS | 🟠 PWA uniquement |
+| `<link rel="apple-touch-startup-image">` | Écran de lancement PWA iOS (une déclinaison par taille d'écran…) | 🟠 PWA exigeante |
+| `msapplication-TileColor` + `browserconfig.xml` | Tuiles Windows 8/10 | ❌ legacy, plus aucun impact |
+
+### Performance avancée & sécurité
+
+| Balise | Rôle | Verdict |
+|---|---|---|
+| `<script type="speculationrules">` | Le successeur officiel de prefetch/prerender : pré-rend les pages probables (navigation quasi instantanée) | ✅ le vrai levier 2026, Chrome/Edge |
+| `<link rel="modulepreload" href="/app.js">` | Précharge un module ES avec ses dépendances | ✅ sites à JS modulaire |
+| `<link rel="prefetch">` / `rel="prerender"` | Anciennes spéculations | 🟠 dépassées par speculationrules |
+| `integrity="sha384-…" crossorigin` sur les scripts externes | SRI : le script tiers modifié est refusé | ✅ dès qu'un script vient d'un CDN |
+| `<meta name="referrer" content="strict-origin-when-cross-origin">` | Politique de référent (l'en-tête HTTP reste préférable) | 🟠 correct en dépannage |
+| `<meta http-equiv="Content-Security-Policy">` | CSP en méta — pas de `frame-ancestors` ni de rapport possible en méta | 🟠 l'en-tête HTTP fait mieux |
+| `<base href="…">` | Redéfinit la base de TOUTES les URLs relatives (liens, images, scripts…) | ❌ piège classique — cassages silencieux, évitez |
+| `<meta http-equiv="refresh" content="5;url=…">` | Redirection côté client | ❌ toujours préférer une 301 serveur |
+
+### Open Graph étendu
+
+| Balise | Rôle | Verdict |
+|---|---|---|
+| `article:published_time` / `article:modified_time` / `article:author` | Métadonnées d'article pour les partages (et lues par certains parseurs) | ✅ sur les blogs |
+| `og:image:alt` | Texte alternatif de l'image de partage (accessibilité) | ✅ deux secondes de travail |
+| `og:video` / `og:audio` | Média embarqué dans le partage | 🟠 niche |
+| `fb:app_id` | Lien vers une app Facebook | ❌ inutile sans app Facebook |
+| `<meta name="rating" content="adult">` | Auto-signalement de contenu adulte (SafeSearch) | 🟠 obligatoire… si concerné |
+
+## 10. La checklist de mise en prod
 
 - [ ] `charset` + `viewport` en tête, zoom libre
 - [ ] `<title>` unique, 50-60 caractères, mot-clé au début
@@ -252,10 +304,8 @@ Quatre fichiers suffisent en 2026 :
 
 ---
 
-## Crédits & licence
+## Licence
 
-Rédaction 100 % originale. L'idée d'un répertoire dédié au `<head>` a été popularisée par [HEAD de Josh Buchea](https://github.com/joshbuchea/HEAD) — allez-y pour l'inventaire exhaustif des balises ; venez ici pour savoir lesquelles comptent et pourquoi.
-
-Licence **CC BY 4.0** : réutilisation libre à condition de créditer « Bernard David Corroy — [david-corroy.com](https://www.david-corroy.com/) ».
+Rédaction 100 % originale. Licence **CC BY 4.0** : réutilisation libre à condition de créditer « Bernard David Corroy — [david-corroy.com](https://www.david-corroy.com/) ».
 
 **L'auteur** : Bernard David Corroy, consultant SEO & GEO indépendant — [Site](https://www.david-corroy.com/) · [Audit express gratuit](https://www.david-corroy.com/audit-express/) · [Prompts GEO](https://github.com/david-corroy/prompts-geo) · [LinkedIn](https://www.linkedin.com/in/bernard-david-corroy/) · [Wikidata](https://www.wikidata.org/entity/Q140472682)
