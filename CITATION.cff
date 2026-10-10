@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ce travail, merci de le citer ainsi."
+title: "Le guide de la balise head pour le SEO et le GEO"
+type: software
+authors:
+  - family-names: Corroy
+    given-names: "Bernard David"
+    website: "https://www.david-corroy.com/"
+repository-code: "https://github.com/david-corroy/html-head-seo"
+url: "https://www.david-corroy.com/travaux-et-donnees/"
+date-released: 2026-07-16
+license: CC-BY-4.0
+keywords:
+  - "SEO"
+  - "GEO"
+  - "HTML"
+  - "meta tags"
+  - "JSON-LD"
